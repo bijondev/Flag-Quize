@@ -11,7 +11,7 @@
         android:id="@+id/textViewQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:text="Question : 0"
         android:textColor="#FF2A2A"
         android:textSize="16sp"
@@ -49,9 +49,9 @@
 
     <ImageView
         android:id="@+id/imageViewFlag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +61,7 @@
     <LinearLayout
         android:layout_width="409dp"
         android:layout_height="384dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="50dp"
         android:orientation="vertical"
         android:paddingLeft="50dp"
         android:paddingTop="10dp"

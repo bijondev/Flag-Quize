@@ -14,7 +14,7 @@
         android:layout_marginTop="200dp"
         android:text="Welcome to flag game"
         android:textAlignment="center"
-        android:textSize="60sp"
+        android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
