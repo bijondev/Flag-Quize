@@ -2,6 +2,8 @@ package dev.bijon.flagcuize;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +29,8 @@ public class QuizeActivity extends AppCompatActivity {
     private ArrayList<FlagsModel> wrongOptionList;
     HashSet<FlagsModel> mixOptions = new HashSet<>();
     ArrayList<FlagsModel> options = new ArrayList<>();
+
+    boolean buttonControl = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,28 +58,28 @@ public class QuizeActivity extends AppCompatActivity {
         buttonA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                answerControll(buttonA);
             }
         });
 
         buttonB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                answerControll(buttonB);
             }
         });
 
         buttonC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                answerControll(buttonC);
             }
         });
 
         buttonD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                answerControll(buttonD);
             }
         });
 
@@ -83,7 +87,41 @@ public class QuizeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 questions++;
-                loadQuestions();
+
+                if (!buttonControl && questions < 10) {
+                    empty++;
+                    textViewEmpty.setText("Empty : " + empty);
+                    loadQuestions();
+                }
+                else if (buttonControl && questions < 10) {
+                    buttonA.setClickable(true);
+                    buttonB.setClickable(true);
+                    buttonC.setClickable(true);
+                    buttonD.setClickable(true);
+
+                    buttonA.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                    buttonB.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                    buttonC.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                    buttonD.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                    loadQuestions();
+                }
+                if (!buttonControl && questions == 10) {
+                    empty++;
+                    Intent intent = new Intent(QuizeActivity.this, ResultActivity.class);
+                    intent.putExtra("correct", correct);
+                    intent.putExtra("wrong", wrong);
+                    intent.putExtra("empty", empty);
+                    startActivity(intent);
+                    finish();
+                }
+                else if( buttonControl && questions == 10){
+                    Intent intent = new Intent(QuizeActivity.this, ResultActivity.class);
+                    intent.putExtra("correct", correct);
+                    intent.putExtra("wrong", wrong);
+                    intent.putExtra("empty", empty);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }
@@ -95,9 +133,6 @@ public class QuizeActivity extends AppCompatActivity {
 
         Log.d("Flagname", correctFlag.getFlag_image());
 
-//        imageViewFlag.setImageResource(
-//                getResources().getIdentifier(correctFlag.getFlag_name(), "drawable", getPackageName())
-//        );
         int resourceId = getResources().getIdentifier(correctFlag.getFlag_image(), "drawable", getPackageName());
         Log.d("Debug", "Resource ID: " + resourceId);
         imageViewFlag.setImageResource(resourceId);
@@ -119,10 +154,41 @@ public class QuizeActivity extends AppCompatActivity {
         buttonB.setText(options.get(1).getFlag_name());
         buttonC.setText(options.get(2).getFlag_name());
         buttonD.setText(options.get(3).getFlag_name());
+        buttonControl = false;
+    }
 
+    public void answerControll(Button button) {
+        String buttonText = button.getText().toString();
+        String correctAnswer = correctFlag.getFlag_name();
 
-//        textViewQuestion.setText("Question : "+questions);
-//        textViewQuestion.setText("Question : "+questions);
-//        textViewQuestion.setText("Question : "+questions);
+        if (buttonText.equals(correctAnswer)) {
+            correct++;
+            button.setBackgroundColor(Color.GREEN);
+        } else {
+            wrong++;
+            button.setBackgroundColor(Color.RED);
+
+            if (buttonA.getText().toString().equals(correctAnswer)) {
+                buttonA.setBackgroundColor(Color.GREEN);
+            }
+            if (buttonB.getText().toString().equals(correctAnswer)) {
+                buttonB.setBackgroundColor(Color.GREEN);
+            }
+            if (buttonC.getText().toString().equals(correctAnswer)) {
+                buttonC.setBackgroundColor(Color.GREEN);
+            }
+            if (buttonD.getText().toString().equals(correctAnswer)) {
+                buttonD.setBackgroundColor(Color.GREEN);
+            }
+        }
+        buttonA.setClickable(false);
+        buttonB.setClickable(false);
+        buttonC.setClickable(false);
+        buttonD.setClickable(false);
+
+        textViewCorrect.setText("Correct : " + correct);
+        textViewWrong.setText("Wrong : " + wrong);
+
+        buttonControl = true;
     }
 }
