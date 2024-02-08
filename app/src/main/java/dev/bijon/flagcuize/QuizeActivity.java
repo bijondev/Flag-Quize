@@ -1,6 +1,7 @@
 package dev.bijon.flagcuize;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -99,10 +100,13 @@ public class QuizeActivity extends AppCompatActivity {
                     buttonC.setClickable(true);
                     buttonD.setClickable(true);
 
-                    buttonA.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                    buttonB.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                    buttonC.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                    buttonD.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                    int color = ContextCompat.getColor(view.getContext(), R.color.colorPrimaryDark);
+
+
+                    buttonA.setBackgroundColor(color);
+                    buttonB.setBackgroundColor(color);
+                    buttonC.setBackgroundColor(color);
+                    buttonD.setBackgroundColor(color);
                     loadQuestions();
                 }
                 if (!buttonControl && questions == 10) {
